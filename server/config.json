@@ -1,0 +1,19 @@
+﻿{
+    "connectionString": "mongodb+srv://mcjovial:19971104Mj@mern-commerce-api.sro0gfq.mongodb.net/?retryWrites=true&w=majority",
+    "secret": "mcJoviAl",
+    "emailFrom": "info@auth-veri.com",
+    "smtpOptions": {
+        "host": "smtp.mailtrap.io",
+        "port": 2525,
+        "auth": {
+            "user": "b1c6efdd37e00e",
+            "pass": "c43a4df99a8c33"
+        }
+    },
+    "cloudinary": {
+        "cloud_name": "mcjovial",
+        "api_key": "713374374612963",
+        "api_secret": "MnfURZPcJUZeOrA9tiKku-mVr0o"  
+    }
+    
+}
