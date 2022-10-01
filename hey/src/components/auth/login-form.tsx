@@ -10,7 +10,7 @@ import { useLoginMutation } from '@data/user/use-login.mutation';
 import { useTranslation } from 'next-i18next';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
-import Link from '@components/ui/link';
+// import Link from '@components/ui/link';
 import { allowedRoles, hasAccess, setAuthCredentials } from '@utils/auth-utils';
 import { toast } from 'react-toastify';
 
@@ -47,7 +47,7 @@ const LoginForm = () => {
   const router = useRouter();
 
   function onSubmit({ email, password }: FormValues) {
-    console.log('heeeeerrreee');
+    console.log(email, password);
     
     login(
       {
@@ -58,9 +58,9 @@ const LoginForm = () => {
       },
       {
         onSuccess: ({ data }) => {
-          if (data?.token) {
-            if (hasAccess(allowedRoles, data?.permissions)) {
-              setAuthCredentials(data?.token, data?.permissions);
+          if (data?.jwtToken) {
+            if (hasAccess(allowedRoles, data?.role)) {
+              setAuthCredentials(data?.jwtToken, [data?.role]);
               router.push(ROUTES.DASHBOARD);
               return;
             }
@@ -104,22 +104,22 @@ const LoginForm = () => {
           {t('form:button-label-login')}
         </Button>
 
-        <div className="flex flex-col items-center justify-center relative text-sm text-heading mt-8 sm:mt-11 mb-6 sm:mb-8">
+        {/* <div className="flex flex-col items-center justify-center relative text-sm text-heading mt-8 sm:mt-11 mb-6 sm:mb-8">
           <hr className="w-full" />
           <span className="absolute start-2/4 -top-2.5 px-2 -ms-4 bg-light">
-            {t('common:text-or')}
+            {t("common:text-or")}
           </span>
         </div>
 
         <div className="text-sm sm:text-base text-body text-center">
-          {t('form:text-no-account')}{' '}
+          {t("form:text-no-account")}{" "}
           <Link
             href="/register"
             className="ms-1 underline text-accent font-semibold transition-colors duration-200 focus:outline-none hover:text-accent-hover focus:text-accent-700 hover:no-underline focus:no-underline"
           >
-            {t('form:link-register-shop-owner')}
+            {t("form:link-register-shop-owner")}
           </Link>
-        </div>
+        </div> */}
 
         {errorMsg ? (
           <Alert

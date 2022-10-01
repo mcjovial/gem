@@ -60,11 +60,7 @@ export default function Dashboard() {
     error: popularProductError,
   } = usePopularProductsQuery({ limit: 10 });
 
-  const { data: withdrawsData, isLoading: withdrawLoading } = useWithdrawsQuery(
-    { limit: 10 }
-  );
-
-  if (loading || orderLoading || popularProductLoading || withdrawLoading) {
+  if (loading || orderLoading || popularProductLoading) {
     return <Loader text={t('common:text-loading')} />;
   }
   if (orderError || popularProductError) {
@@ -88,13 +84,13 @@ export default function Dashboard() {
   }
   return (
     <>
-      <div className="w-full grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-5 mb-6">
+      <div className="w-full grid grid-cols-1 sm:grid-cols-1 xl:grid-cols-3 gap-5 mb-6">
         <div className="w-full ">
           <StickerCard
             titleTransKey="sticker-card-title-rev"
             subtitleTransKey="sticker-card-subtitle-rev"
             icon={<DollarIcon className="w-7 h-7" color="#047857" />}
-            iconBgStyle={{ backgroundColor: '#A7F3D0' }}
+            iconBgStyle={{ backgroundColor: "#A7F3D0" }}
             price={total_revenue}
           />
         </div>
@@ -113,60 +109,45 @@ export default function Dashboard() {
             price={todays_revenue}
           />
         </div>
-        <div className="w-full ">
-          <StickerCard
-            titleTransKey="sticker-card-title-total-shops"
-            icon={<ShopIcon className="w-6" color="#1D4ED8" />}
-            iconBgStyle={{ backgroundColor: '#93C5FD' }}
-            price={data?.totalShops}
-          />
-        </div>
       </div>
+
 
       <div className="w-full flex flex-wrap mb-6">
         <ColumnChart
           widgetTitle="Sale History"
-          colors={['#03D3B5']}
+          colors={["#03D3B5"]}
           series={salesByYear}
           categories={[
-            t('common:january'),
-            t('common:february'),
-            t('common:march'),
-            t('common:april'),
-            t('common:may'),
-            t('common:june'),
-            t('common:july'),
-            t('common:august'),
-            t('common:september'),
-            t('common:october'),
-            t('common:november'),
-            t('common:december'),
+            t("common:january"),
+            t("common:february"),
+            t("common:march"),
+            t("common:april"),
+            t("common:may"),
+            t("common:june"),
+            t("common:july"),
+            t("common:august"),
+            t("common:september"),
+            t("common:october"),
+            t("common:november"),
+            t("common:december"),
           ]}
         />
       </div>
 
       <div className="w-full flex flex-wrap mb-6">
-        <div className="w-full sm:w-1/2 xl:w-1/2 sm:px-3 sm:pl-0 mb-6 xl:mb-0">
+        <div className="w-full sm:pe-0 mb-6 xl:mb-0">
           <RecentOrders
             orders={orderData?.orders?.data}
-            title={t('table:recent-order-table-title')}
-          />
-        </div>
-
-        <div className="w-full sm:w-1/2 xl:w-1/2 sm:px-3 sm:pr-0 mb-6 xl:mb-0">
-          <WithdrawTable
-            //@ts-ignore
-            withdraws={withdrawsData?.withdraws}
-            title={t('table:withdraw-table-title')}
+            title={t("table:recent-order-table-title")}
           />
         </div>
       </div>
-      {/* <div className="w-full sm:pe-0 mb-6 xl:mb-0">
+      <div className="w-full sm:pe-0 mb-6 xl:mb-0">
         <PopularProductList
-          products={popularProductData?.data}
-          title={t('table:popular-products-table-title')}
+          products={popularProductData}
+          title={t("table:popular-products-table-title")}
         />
-      </div> */}
+      </div>
     </>
   );
 }

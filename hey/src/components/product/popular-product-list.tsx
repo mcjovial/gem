@@ -1,12 +1,12 @@
 import { Table } from "@components/ui/table";
-import { Product, Shop } from "@ts-types/generated";
+import { Product } from "@ts-types/generated";
 import usePrice from "@utils/use-price";
 import { useRouter } from "next/router";
 import { useTranslation } from "next-i18next";
 import { useIsRTL } from "@utils/locals";
 
 export type IProps = {
-  products?: Product[] | null | undefined;
+  products: Product[] | null | undefined;
   title?: string;
 };
 
@@ -14,14 +14,15 @@ const PopularProductList = ({ products, title }: IProps) => {
   const router = useRouter();
   const { t } = useTranslation();
   const { alignLeft, alignRight } = useIsRTL();
-
+  
   let columns = [
     {
       title: t("table:table-item-id"),
-      dataIndex: "id",
-      key: "id",
+      dataIndex: "_id",
+      key: "_id",
+      ellipsis: true,
       align: "center",
-      width: 64,
+      width: 80,
     },
     {
       title: t("table:table-item-title"),
@@ -35,37 +36,37 @@ const PopularProductList = ({ products, title }: IProps) => {
     },
     {
       title: t("table:table-item-group"),
-      dataIndex: "type",
-      key: "type",
+      dataIndex: "categories",
+      key: "categories",
       align: "center",
-      render: (type: any) => (
-        <span className="whitespace-nowrap">{type?.name}</span>
+      render: (categories: any) => (
+        <span className="whitespace-nowrap">{categories[0]?.name}</span>
       ),
     },
 
-    {
-      title: t("table:table-item-shop"),
-      dataIndex: "shop",
-      key: "shop",
-      // width: 120,
-      align: "center",
-      ellipsis: true,
-      render: (shop: Shop) => (
-        <span className="whitespace-nowrap truncate">{shop?.name}</span>
-      ),
-    },
+    // {
+    //   title: t("table:table-item-shop"),
+    //   dataIndex: "shop",
+    //   key: "shop",
+    //   // width: 120,
+    //   align: "center",
+    //   ellipsis: true,
+    //   render: (shop: Shop) => (
+    //     <span className="whitespace-nowrap truncate">{shop?.name}</span>
+    //   ),
+    // },
 
     {
       title: t("table:table-item-unit"),
       dataIndex: "price",
       key: "price",
-      align: alignRight,
-      width: 100,
+      align: "center",
+      // width: 100,
       render: (value: number) => {
-        // const { price } = usePrice({
-        //   amount: value,
-        // });
-        return <span>{value}</span>;
+        const { price } = usePrice({
+          amount: value,
+        });
+        return <span>{price}</span>;
       },
     },
     {
