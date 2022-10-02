@@ -2,6 +2,14 @@ const withPWA = require('next-pwa');
 const runtimeCaching = require('next-pwa/cache');
 const { i18n } = require('./next-i18next.config');
 
+// const withPWA = require("next-pwa")({
+//   dest: "public",
+//   register: true,
+//   skipWaiting: true,
+//   // runtimeCaching,
+//   buildExcludes: [/middleware-manifest.json$/],
+// });
+
 module.exports = withPWA({
   i18n,
   pwa: {
