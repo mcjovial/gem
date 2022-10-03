@@ -1,25 +1,23 @@
-const withPWA = require('next-pwa');
 const runtimeCaching = require('next-pwa/cache');
 const { i18n } = require('./next-i18next.config');
 
-// const withPWA = require("next-pwa")({
-//   dest: "public",
-//   register: true,
-//   skipWaiting: true,
-//   // runtimeCaching,
-//   buildExcludes: [/middleware-manifest.json$/],
-// });
+const withPWA = require('next-pwa')({
+	dest: 'public',
+  disable: process.env.NODE_ENV === 'development',
+  register: true,
+  skipWaiting: true,
+  runtimeCaching
+  // scope: '/app',
+  // sw: 'service-worker.js',
+  //...
+})
 
 module.exports = withPWA({
+  // next.js config
   i18n,
-  pwa: {
-    disable: process.env.NODE_ENV === 'development',
-    dest: 'public',
-    runtimeCaching,
-  },
-
   images: {
     domains: [
+      'https://gem-admin.herokuapp.com/',
       '151.106.113.197',
       'via.placeholder.com',
       'res.cloudinary.com',
@@ -37,4 +35,4 @@ module.exports = withPWA({
   typescript: {
     ignoreBuildErrors: true,
   },
-});
+})

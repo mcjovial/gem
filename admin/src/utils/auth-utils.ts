@@ -16,7 +16,7 @@ export const adminOnly = [SUPER_ADMIN];
 export const ownerOnly = [STORE_OWNER];
 
 export function setAuthCredentials(token: string, permissions: any) {
-  Cookie.set(AUTH_CRED, { token, permissions });
+  Cookie.set(AUTH_CRED, JSON.stringify({ token, permissions }));
 }
 
 export function getAuthCredentials(context?: any): {
@@ -30,6 +30,8 @@ export function getAuthCredentials(context?: any): {
     authCred = Cookie.get(AUTH_CRED);
   }
   if (authCred) {
+    console.log('koooo d', authCred);
+
     return JSON.parse(authCred);
   }
   return { token: null, permissions: null };
