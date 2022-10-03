@@ -30,8 +30,6 @@ export function getAuthCredentials(context?: any): {
     authCred = Cookie.get(AUTH_CRED);
   }
   if (authCred) {
-    console.log('koooo', authCred);
-    
     return JSON.parse(authCred);
   }
   return { token: null, permissions: null };
