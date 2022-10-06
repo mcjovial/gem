@@ -25,7 +25,7 @@ router.use("/attributes", attributesRoute);
 router.use("/cart", cartRoute);
 router.use("/orders", orderRoute);
 router.use("/wishlist", wishlistRoute);
-router.use("/coupon", couponRoute);
+router.use("/coupons", couponRoute);
 router.use("/categories", categoryRoute);
 router.use("/sub-category", subCategoryRoute);
 router.use("/products", productRoute);

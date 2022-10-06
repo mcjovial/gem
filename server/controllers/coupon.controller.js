@@ -2,7 +2,7 @@ const couponService = require("../services/coupon.service");
 
 exports.createCoupon = (req, res, next) => {
   couponService
-    .createCoupon(req.body)
+    .create(req.body)
     .then((data) =>
       res.status(201).json({ ...data, message: "Coupon created successfuly" })
     )
@@ -11,16 +11,36 @@ exports.createCoupon = (req, res, next) => {
 
 exports.removeCoupon = (req, res, next) => {
   couponService
-    .removeCoupon(req.params.couponId)
+    .remove(req.params.id)
     .then((data) =>
       res.status(200).json({ ...data, message: "Coupon deleted successfuly" })
     )
     .catch(next);
 };
 
-exports.listCoupon = (req, res, next) => {
+exports.getCoupons = (req, res, next) => {
   couponService
-    .listCoupon()
+    .getAll(req.params)
+    .then((data) => res.status(200).json(data))
+    .catch(next);
+};
+
+exports.getCoupon = (req, res, next) => {
+  couponService
+    .getOne(req.params.id)
+    .then((data) => res.status(200).json(data))
+    .catch(next);
+};
+
+exports.updateCoupon = (req, res, next) => {
+  couponService
+    .update(req.params.id, req.body)
+    .then((data) => res.status(201).json(data))
+    .catch(next);
+};
+exports.verifyCoupon = (req, res, next) => {
+  couponService
+    .verify(req.body)
     .then((data) => res.status(200).json(data))
     .catch(next);
 };

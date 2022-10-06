@@ -1,26 +1,51 @@
 const Coupon = require("../models/coupon.model");
 
 module.exports = {
-  createCoupon,
-  removeCoupon,
-  listCoupon,
+  create,
+  getAll,
+  getOne,
+  verify,
+  update,
+  remove
 };
 
-async function createCoupon(params) {
-  const { name, expiry, discount } = params;
-  return await new Coupon({ name, expiry, discount }).save();
+
+async function create(body) {
+  return await Coupon.create(body);
 }
 
-async function removeCoupon(couponId) {
-  await getCoupon(couponId)
-  return await Coupon.findByIdAndDelete(couponId);
+async function getAll({ search, limit, page, orderBy, sortedBy }) {
+  return await Coupon.find(search ? { $text: { $search: search } } : {})
+    // .populate("orders")
+    .skip(limit * page)
+    .sort([[sortedBy, orderBy]])
+    .limit(limit);
 }
 
-async function listCoupon() {
-  return await Coupon.find({}).sort({ createdAt: -1 });
+async function getOne(id) {
+  return Coupon.findById(id);
 }
 
-async function getCoupon(id) {
-  const coupon = await Coupon.findById(id)
-  if (!coupon) throw "Coupon not found"
+async function verify(body) {
+  const coupon = await Coupon.findOne({
+    code: body.code
+  });
+  if (!coupon) throw "Coupon not found.";
+
+  return {
+    coupon,
+    is_valid: new Date(coupon.expire_at).getTime() > new Date().getTime(),
+  };
+}
+
+async function update(id, body) {
+  return await Coupon.findByIdAndUpdate(
+    id,
+    { $set: body },
+    { new: true },
+  );
+}
+
+async function remove(id) {
+  return await Coupon.findByIdAndRemove(id, { new: true });
 }
