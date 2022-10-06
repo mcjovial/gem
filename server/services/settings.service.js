@@ -1,13 +1,14 @@
 const Settings = require("../models/settings.model")
 
 async function addSettings(params) {
+  const body = params.options
+  delete body.ogImage
+  delete body.seo
   const val = await Settings.find({}).sort({ "_id": 1 }).limit(1)
   return await Settings.findByIdAndUpdate(
     val[0].id,
-    {params},
+    {...body},
     { upsert: true, setDefaultsOnInsert: true })
-  // console.log(val[0].id);
-  // return await Setting.create(params)
 }
 
 async function getSettings() {

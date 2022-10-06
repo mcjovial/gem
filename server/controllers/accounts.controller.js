@@ -1,5 +1,5 @@
 ﻿const Role = require("_helpers/role");
-const accountService = require("services/account.service");
+const accountService = require("../services/account.service");
 
 
 exports.authenticate = (req, res, next) => {

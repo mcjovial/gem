@@ -1,4 +1,4 @@
-const settingService = require("services/settings.service");
+const settingService = require("../services/settings.service");
 
 exports.createOrUpdate = (req, res, next) => {
   settingService
