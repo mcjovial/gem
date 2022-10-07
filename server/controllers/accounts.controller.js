@@ -1,7 +1,6 @@
 ﻿const Role = require("_helpers/role");
 const accountService = require("../services/account.service");
 
-
 exports.authenticate = (req, res, next) => {
   const { email, password } = req.body;
   const ipAddress = req.ip;
@@ -92,18 +91,36 @@ exports.resetPassword = (req, res, next) => {
     .catch(next);
 };
 
+//////////////////////////////////////////////////////////////////////////////
 exports.getAll = (req, res, next) => {
   accountService
-    .getAll()
+    .getAll(req.params)
     .then((accounts) => res.json(accounts))
     .catch(next);
 };
 
+exports.banUser = (req, res, next) => {
+  accountService
+    .banUser(req.body.id)
+    .then((data) => res.json({ ...data, message: "User banned" }))
+    .catch(next);
+};
+
+exports.activateUser = (req, res, next) => {
+  accountService
+    .activateUser(req.body.id)
+    .then((data) =>
+      res.json({ ...data, message: "User activated successfully" })
+    )
+    .catch(next);
+};
+
 exports.getInfo = async (req, res, next) => {
-  accountService.userInfo(req.user.id)
-  .then((data) => res.status(200).json(data))
-  .catch(next);
-}
+  accountService
+    .userInfo(req.user.id)
+    .then((data) => res.status(200).json(data))
+    .catch(next);
+};
 
 exports.getById = (req, res, next) => {
   // users can get their own account and admins can get any account
