@@ -20,6 +20,18 @@ exports.getOrders = (req, res, next) => {
     .then((data) => res.status(200).json(data))
     .catch(next);
 };
+exports.getOrder = (req, res, next) => {
+  orderService
+    .getOne(req.params.id)
+    .then((data) => res.status(200).json(data))
+    .catch(next);
+};
+exports.updateStatus = (req, res, next) => {
+  orderService
+    .updateStatus(req.params.id, req.body.statusId)
+    .then((data) => res.status(200).json(data))
+    .catch(next);
+};
 
 exports.createCashOrder = (req, res, next) => {
   orderService

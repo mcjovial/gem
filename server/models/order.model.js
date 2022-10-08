@@ -1,10 +1,10 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
-const { ObjectId } = mongoose.Schema;
+const { ObjectId } = Schema;
 
-const orderSchema = new mongoose.Schema(
+const orderSchema = new Schema(
   {
-    trackingId: String,
+    tracking_number: String,
     products: [
       {
         product: {
@@ -16,27 +16,20 @@ const orderSchema = new mongoose.Schema(
       },
     ],
     paymentIntent: {},
-    status: {
-      type: String,
-      default: "Not Processed",
-      enum: [
-        "Not Processed",
-        "Cash On Delivery",
-        "processing",
-        "Dispatched",
-        "Cancelled",
-        "Completed",
-      ],
-    },
+    status: { type: ObjectId, ref: "OrderStatus" },
+    amount: Number,
+    discount: Number,
     total: Number,
+    coupon: { type: ObjectId, ref: "Coupon" },
     orderedBy: { type: ObjectId, ref: "Account" },
-    vendor: { type: ObjectId, ref: "Shop" },
-    courier: { type: ObjectId, ref: "Account" },
+    // vendor: { type: ObjectId, ref: "Shop" },
+    // courier: { type: ObjectId, ref: "Account" },
     coupon: String,
-    delivery_time: Date,
-    billing_address: { type: ObjectId, ref: "Address" },
-    shipping_address: { type: ObjectId, ref: "Address" }
-  
+    // delivery_time: Date,
+    // billing_address: { type: ObjectId, ref: "Address" },
+    delivery_address: String,
+    // children: [{ type: ObjectId, ref: "Order" }],
+    // parent_order: { type: ObjectId, ref: "Order" },
   },
   { timestamps: true }
 );
